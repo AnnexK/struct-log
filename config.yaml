@@ -1,0 +1,4 @@
+sentry:
+  dsn: http://0f3f79e52c2d44e08beb9a88cea44b4e@localhost:9000/3
+  release: 0.1.0
+  environment: Development

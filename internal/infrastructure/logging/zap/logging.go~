@@ -1,0 +1,22 @@
+package zap
+
+import (
+	"github.com/AnnexK/struct-log/internal/config"
+	"go.uber.org/zap"
+)
+
+func InitLogging(cfg config.Config) error {
+	level := zap.InfoLevel
+	if cfg.Debug {
+		level = zap.DebugLevel
+	}
+	loggingConfig := zap.Config{}
+	loggingConfig.Level.SetLevel(level)
+
+	logger, err := loggingConfig.Build()
+	if err != nil {
+		return err
+	}
+	zap.ReplaceGlobals(logger)
+	return nil
+}

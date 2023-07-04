@@ -1,0 +1,9 @@
+package infrastructure
+
+import "github.com/getsentry/sentry-go"
+import "github.com/AnnexK/struct-log/internal/config"
+
+// InitSentry инициализирует Sentry.
+func InitSentry(cfg config.Config) error {
+	return nil
+}

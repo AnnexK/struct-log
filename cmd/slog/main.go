@@ -1,0 +1,35 @@
+// package main
+
+import "github.com/AnnexK/struct-log/internal/config"
+import slogimpl "github.com/AnnexK/struct-log/internal/infrastructure/logging/slog"
+import "golang.org/x/exp/slog"
+import "errors"
+import "context"
+
+func main() {
+	cfg := config.MustLoadConfig()
+	_ = slogimpl.InitLogging(cfg)
+
+	// Basic logging
+	slog.Info("hello slog", "someField", 64, "someOtherField", "kek")
+
+	// Errors
+	slog.Error("error for slog", "err", errors.New("something bad happened"))
+
+	// Logger context
+	logger := slog.With("loggerField", "loggerField", "otherLoggerField", 321)
+	logger.Info("hello slog", "someField", 64)
+
+	// Logger grouped context
+	logger2 := slog.Default().WithGroup("logger2")
+	logger2.Info("hello slog", "someField", 64)
+
+	// Nested objects
+	slog.Info("hello slog", slog.Group("group", "nestedField1", "neField", "nestedField2", 165, "ok", true))
+
+	// Attrs
+	slog.Info("hello slog", slog.Int("field", 61), slog.Bool("ok", false))
+
+	// Zero-alloc with attrs
+	slog.LogAttrs(context.Background(), slog.LevelInfo, "hello slog", slog.Int("field", 61))
+}
